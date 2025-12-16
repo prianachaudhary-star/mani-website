@@ -1,11 +1,12 @@
 {
   "name": "skm-chambers-backend",
   "version": "1.0.0",
-  "description": "Backend API for SKM Chambers law firm website",
+  "description": "Backend API for SKM Chambers law firm website - Render Ready",
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
     "dev": "nodemon server.js",
+    "render-build": "npm install",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [
@@ -13,11 +14,11 @@
     "backend",
     "express",
     "mongoose",
-    "api"
+    "api",
+    "render"
   ],
   "author": "SKM Chambers",
   "license": "ISC",
-  "type": "commonjs",
   "dependencies": {
     "cors": "^2.8.5",
     "dotenv": "^17.2.3",
@@ -28,7 +29,8 @@
     "nodemon": "^3.1.11"
   },
   "engines": {
-    "node": ">=14.0.0"
+    "node": ">=18.0.0",
+    "npm": ">=8.0.0"
   },
   "repository": {
     "type": "git",
