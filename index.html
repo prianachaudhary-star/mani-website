@@ -1,0 +1,1063 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SKM Chambers | Supreme Court of India</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --background: #FAFAF7;
+            --card-bg: #FFFFFF;
+            --text: #1C1C1C;
+            --accent: #0D1B2A;
+            --light-text: #666666;
+            --border: rgba(0, 0, 0, 0.08);
+            --shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            font-weight: 400;
+            font-size: 16px;
+            line-height: 1.55;
+            color: var(--text);
+            background-color: var(--background);
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            background-image: 
+                linear-gradient(45deg, rgba(0, 0, 0, 0.02) 25%, transparent 25%),
+                linear-gradient(-45deg, rgba(0, 0, 0, 0.02) 25%, transparent 25%),
+                linear-gradient(45deg, transparent 75%, rgba(0, 0, 0, 0.02) 75%),
+                linear-gradient(-45deg, transparent 75%, rgba(0, 0, 0, 0.02) 75%);
+            background-size: 20px 20px;
+            background-position: 0 0, 0 10px, 10px -10px, -10px 0px;
+        }
+        
+        h1, h2, h3, h4, h5 {
+            font-family: 'Cormorant Garamond', serif;
+            font-weight: 500;
+            line-height: 1.2;
+            margin-bottom: 16px;
+        }
+        
+        /* BCI Disclaimer Overlay - VISIBLE BY DEFAULT */
+        #disclaimer-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.95);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            z-index: 99999;
+        }
+        
+        /* Hide website content by default */
+        .website-content {
+            display: none;
+        }
+        
+        .disclaimer-content {
+            max-width: 560px;
+            background-color: var(--card-bg);
+            padding: 48px;
+            border-radius: 12px;
+            box-shadow: 0 12px 48px rgba(0, 0, 0, 0.3);
+            max-height: 85vh;
+            overflow-y: auto;
+            animation: fadeIn 0.5s ease;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .disclaimer-title {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 28px;
+            margin-bottom: 24px;
+            text-align: center;
+            color: var(--text);
+        }
+        
+        .disclaimer-text {
+            margin-bottom: 32px;
+            line-height: 1.6;
+            color: var(--light-text);
+        }
+        
+        .disclaimer-text p {
+            margin-bottom: 16px;
+        }
+        
+        .disclaimer-text ul {
+            margin-left: 20px;
+            margin-bottom: 16px;
+        }
+        
+        .disclaimer-text li {
+            margin-bottom: 8px;
+        }
+        
+        .disclaimer-divider {
+            height: 1px;
+            background-color: var(--border);
+            margin: 24px 0;
+        }
+        
+        .disclaimer-actions {
+            text-align: center;
+            margin-top: 24px;
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        
+        .btn {
+            display: inline-block;
+            padding: 12px 32px;
+            background-color: var(--accent);
+            color: white;
+            border: none;
+            font-family: 'Inter', sans-serif;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            letter-spacing: 0.5px;
+            border-radius: 4px;
+            min-width: 160px;
+        }
+        
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
+        }
+        
+        .btn-secondary {
+            background-color: transparent;
+            color: var(--text);
+            border: 1px solid var(--border);
+        }
+        
+        .btn-secondary:hover {
+            background-color: rgba(0, 0, 0, 0.05);
+        }
+        
+        /* Header */
+        .header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            padding: 20px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: var(--card-bg);
+            z-index: 100;
+            border-bottom: 1px solid var(--border);
+        }
+        
+        /* Updated Chamber Name with Logo */
+        .chamber-name {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+        }
+        
+        .logo {
+            height: 36px;
+            width: 36px;
+            object-fit: contain;
+        }
+        
+        .chamber-name-text {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 20px;
+            font-weight: 500;
+            color: var(--text);
+            letter-spacing: 0.5px;
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 32px;
+        }
+        
+        .nav-link {
+            color: var(--text);
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 400;
+            transition: color 0.3s ease;
+        }
+        
+        .nav-link:hover {
+            color: var(--accent);
+        }
+        
+        /* Main Content */
+        .main-content {
+            padding-top: 80px;
+        }
+        
+        .section {
+            padding: 64px 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .section-title {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 32px;
+            margin-bottom: 32px;
+            text-align: center;
+            color: var(--text);
+        }
+        
+        .section-divider {
+            width: 40px;
+            height: 1px;
+            background-color: var(--accent);
+            margin: 0 auto 32px;
+        }
+        
+        /* Hero */
+        .hero {
+            text-align: center;
+            padding-bottom: 0;
+            max-width: 780px;
+            margin: 0 auto;
+        }
+        
+        .hero h1 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 48px;
+            font-weight: 500;
+            margin-bottom: 16px;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+            line-height: 1.1;
+        }
+        
+        .hero-subtitle {
+            font-size: 18px;
+            font-weight: 300;
+            color: var(--light-text);
+            max-width: 500px;
+            margin: 0 auto 24px;
+        }
+        
+        .chamber-info {
+            color: var(--light-text);
+            font-size: 14px;
+            margin-top: 32px;
+        }
+        
+        /* Lawyers */
+        .lawyers-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 32px;
+            margin-bottom: 32px;
+            max-width: 780px;
+            margin: 0 auto;
+        }
+        
+        .lawyer-card {
+            background-color: var(--card-bg);
+            padding: 32px;
+            border-radius: 12px;
+            box-shadow: var(--shadow);
+        }
+        
+        .lawyer-name {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 24px;
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+        
+        .lawyer-title {
+            color: var(--accent);
+            margin-bottom: 16px;
+            font-size: 14px;
+            letter-spacing: 0.5px;
+            font-weight: 500;
+        }
+        
+        .lawyer-bio {
+            color: var(--light-text);
+            font-weight: 300;
+            line-height: 1.6;
+        }
+        
+        /* Forms - SIDE BY SIDE LAYOUT */
+        .forms-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .form-card {
+            background-color: var(--card-bg);
+            padding: 32px;
+            border-radius: 12px;
+            box-shadow: var(--shadow);
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .form-title {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 24px;
+            margin-bottom: 24px;
+            text-align: center;
+            font-weight: 500;
+        }
+        
+        .form-divider {
+            height: 1px;
+            background-color: var(--accent);
+            margin: 0 0 24px;
+            width: 40px;
+            align-self: center;
+        }
+        
+        .form-group {
+            margin-bottom: 16px;
+        }
+        
+        .form-label {
+            display: block;
+            margin-bottom: 6px;
+            font-size: 13px;
+            color: var(--text);
+            font-weight: 500;
+        }
+        
+        .form-control {
+            width: 100%;
+            padding: 10px 12px;
+            border: 1px solid var(--border);
+            background-color: transparent;
+            font-family: 'Inter', sans-serif;
+            font-size: 15px;
+            color: var(--text);
+            transition: all 0.3s ease;
+            line-height: 1.5;
+            border-radius: 4px;
+        }
+        
+        .form-control:focus {
+            outline: none;
+            border-color: var(--accent);
+        }
+        
+        textarea.form-control {
+            min-height: 100px;
+            resize: vertical;
+        }
+        
+        select.form-control {
+            appearance: none;
+            background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23666' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+            background-repeat: no-repeat;
+            background-position: right 12px center;
+            background-size: 14px;
+        }
+        
+        .submit-btn {
+            width: 100%;
+            margin-top: 12px;
+            padding: 12px;
+            font-size: 14px;
+            letter-spacing: 0.5px;
+            border: 1px solid var(--accent);
+        }
+        
+        /* Associated Lawyers */
+        .associated-list {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        .associated-item {
+            padding: 20px 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--border);
+        }
+        
+        .associated-item:last-child {
+            border-bottom: none;
+        }
+        
+        .associated-name {
+            font-family: 'Cormorant Garamond', serif;
+            font-weight: 500;
+            font-size: 18px;
+        }
+        
+        .associated-specialty {
+            color: var(--light-text);
+            font-size: 14px;
+            font-weight: 300;
+        }
+        
+        /* Footer */
+        .footer {
+            padding: 64px 20px;
+            background-color: var(--card-bg);
+            border-top: 1px solid var(--border);
+            text-align: center;
+            max-width: 780px;
+            margin: 0 auto;
+        }
+        
+        .footer-logo {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 20px;
+            margin-bottom: 24px;
+            letter-spacing: 0.5px;
+            font-weight: 500;
+        }
+        
+        .footer-address {
+            color: var(--light-text);
+            margin-bottom: 32px;
+            line-height: 1.6;
+            font-weight: 300;
+            max-width: 400px;
+            margin-left: auto;
+            margin-right: auto;
+            font-size: 14px;
+        }
+        
+        .footer-divider {
+            width: 20px;
+            height: 1px;
+            background-color: var(--accent);
+            margin: 32px auto;
+        }
+        
+        .footer-legal {
+            color: var(--light-text);
+            font-size: 12px;
+            font-weight: 300;
+        }
+        
+        .disclaimer-link {
+            color: var(--text);
+            text-decoration: none;
+            font-weight: 400;
+            margin-left: 16px;
+            transition: color 0.3s ease;
+        }
+        
+        .disclaimer-link:hover {
+            color: var(--accent);
+        }
+        
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .forms-container {
+                gap: 30px;
+            }
+            
+            .form-card {
+                padding: 24px;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .header {
+                padding: 16px 20px;
+            }
+            
+            .nav-links {
+                gap: 20px;
+            }
+            
+            .section {
+                padding: 48px 20px;
+            }
+            
+            .hero h1 {
+                font-size: 36px;
+            }
+            
+            .section-title {
+                font-size: 28px;
+                margin-bottom: 24px;
+            }
+            
+            .disclaimer-content {
+                padding: 32px 24px;
+            }
+            
+            .disclaimer-actions {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .btn {
+                width: 100%;
+                max-width: 280px;
+            }
+            
+            /* Stack forms vertically on mobile */
+            .forms-container {
+                grid-template-columns: 1fr;
+                gap: 32px;
+                max-width: 500px;
+            }
+            
+            .lawyers-grid {
+                grid-template-columns: 1fr;
+                gap: 24px;
+            }
+            
+            /* Logo responsive */
+            .logo {
+                height: 28px;
+                width: 28px;
+            }
+            
+            .chamber-name-text {
+                font-size: 18px;
+            }
+            
+            .chamber-name {
+                gap: 8px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .header {
+                flex-direction: column;
+                gap: 16px;
+                padding: 16px;
+            }
+            
+            .nav-links {
+                gap: 16px;
+            }
+            
+            .hero h1 {
+                font-size: 28px;
+            }
+            
+            .hero-subtitle {
+                font-size: 16px;
+            }
+            
+            .associated-item {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 8px;
+            }
+            
+            .forms-container {
+                max-width: 100%;
+            }
+            
+            .form-card {
+                padding: 20px;
+            }
+            
+            .lawyer-card {
+                padding: 24px;
+            }
+            
+            /* Logo responsive for mobile */
+            .logo {
+                height: 24px;
+                width: 24px;
+            }
+            
+            .chamber-name-text {
+                font-size: 16px;
+            }
+            
+            .chamber-name {
+                gap: 6px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- BCI Disclaimer Overlay - VISIBLE BY DEFAULT -->
+    <div id="disclaimer-overlay">
+        <div class="disclaimer-content">
+            <h2 class="disclaimer-title">Legal Disclaimer</h2>
+            
+            <div class="disclaimer-text">
+                <p>This website is maintained by SKM Chambers for informational purposes only.</p>
+                
+                <p><strong>By accessing this website, you acknowledge and agree:</strong></p>
+                
+                <ul>
+                    <li>This website is not an advertisement or solicitation for work</li>
+                    <li>You have voluntarily sought to access this information</li>
+                    <li>The information provided is general in nature, not legal advice</li>
+                    <li>Viewing this website does not create an attorney-client relationship</li>
+                    <li>You should not send confidential information without a formal engagement</li>
+                    <li>The advocates at SKM Chambers are subject to Bar Council of India rules</li>
+                </ul>
+                
+                <p>This website complies with the Bar Council of India's rules regarding advocates' websites.</p>
+                
+                <div class="disclaimer-divider"></div>
+                
+                <p>By proceeding, you confirm you have read, understood, and voluntarily agree to these terms.</p>
+            </div>
+            
+            <div class="disclaimer-actions">
+                <button class="btn" id="agreeButton">I Agree & Enter</button>
+                <button class="btn btn-secondary" id="disagreeButton">I Disagree & Exit</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Website - HIDDEN BY DEFAULT -->
+    <div class="website-content" id="websiteContent">
+        <!-- Header with Logo -->
+        <header class="header">
+            <a href="#home" class="chamber-name">
+                <!-- Replace 'logo.png' with your actual logo file -->
+                <img src="images/Skm-chambers-logo.jpg" alt="SKM Chambers Logo" class="logo">
+                <span class="chamber-name-text">SKM Chambers</span>
+            </a>
+            <nav class="nav-links">
+                <a href="#lawyers" class="nav-link">Our Lawyers</a>
+                <a href="#contact" class="nav-link">Contact</a>
+                <a href="#associated" class="nav-link">Associates</a>
+                <a href="#" class="nav-link" id="showDisclaimer">Disclaimer</a>
+            </nav>
+        </header>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Hero -->
+            <section class="hero section" id="home">
+                <h1>Supreme Court Practice of Distinction</h1>
+                <p class="hero-subtitle">Chamber 236, M.C. Setalvad Lawyers Chambers<br>Supreme Court of India, New Delhi-110001</p>
+                <div class="chamber-info">
+                    <p>Adv. Deepika Mishra (AoR) & Adv. Abhishek Mishra</p>
+                </div>
+            </section>
+
+            <!-- Lawyers -->
+            <section class="section" id="lawyers">
+                <h2 class="section-title">Our Advocates</h2>
+                <div class="section-divider"></div>
+                <div class="lawyers-grid">
+                    <div class="lawyer-card">
+                        <h3 class="lawyer-name">Deepika Mishra</h3>
+                        <p class="lawyer-title">Advocate-on-Record</p>
+                        <p class="lawyer-bio">Constitutional Law, Matrimonial Disputes, Family Disputes, Consumer Disputes, Civil Rights, Public Interest Litigation, Contract Drafting, Acquisition and Mergers, Arbitration, IPR Cases.</p>
+                    </div>
+                    <div class="lawyer-card">
+                        <h3 class="lawyer-name">Abhishek Mishra</h3>
+                        <p class="lawyer-title">Advocate</p>
+                        <p class="lawyer-bio">Corporate Law, Arbitration, Commercial Litigation. Recognized authority in appellate practice before the Supreme Court.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Forms - SIDE BY SIDE -->
+            <section class="section" id="contact">
+                <h2 class="section-title">Contact</h2>
+                <div class="section-divider"></div>
+                <div class="forms-container">
+                    <!-- Enquiry Form - LEFT SIDE -->
+                    <div class="form-card">
+                        <h3 class="form-title">General Enquiry</h3>
+                        <div class="form-divider"></div>
+                        <form id="enquiryForm">
+                            <div class="form-group">
+                                <label class="form-label">Full Name *</label>
+                                <input id="enquiryName" name="name" type="text" class="form-control" required>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Email Address *</label>
+                                <input id="enquiryEmail" name="email" type="email" class="form-control" required>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Phone Number</label>
+                                <input id="enquiryPhone" name="phone" type="tel" class="form-control">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Subject</label>
+                                <input id="enquirySubject" name="subject" type="text" class="form-control">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Your Enquiry *</label>
+                                <textarea id="enquiryMessage" name="message" class="form-control" rows="3" required></textarea>
+                            </div>
+                            <button type="submit" class="btn submit-btn">Submit Enquiry</button>
+                            <div id="enquiryStatus" style="margin-top: 12px; font-size: 13px; text-align: center;"></div>
+                        </form>
+                    </div>
+
+                    <!-- Appointment Form - RIGHT SIDE -->
+                    <div class="form-card">
+                        <h3 class="form-title">Appointment Request</h3>
+                        <div class="form-divider"></div>
+                        <form id="appointmentForm">
+                            <div class="form-group">
+                                <label class="form-label">Full Name *</label>
+                                <input id="appointmentName" name="name" type="text" class="form-control" required>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Email Address *</label>
+                                <input id="appointmentEmail" name="email" type="email" class="form-control" required>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Phone Number *</label>
+                                <input id="appointmentPhone" name="phone" type="tel" class="form-control" required>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Preferred Date *</label>
+                                <input id="appointmentDate" name="preferredDate" type="date" class="form-control" required min="<?php echo date('Y-m-d'); ?>">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Preferred Time *</label>
+                                <select id="appointmentTime" name="preferredTime" class="form-control" required>
+                                    <option value="">Select a time</option>
+                                    <option value="10:00">10:00 AM</option>
+                                    <option value="11:00">11:00 AM</option>
+                                    <option value="12:00">12:00 PM</option>
+                                    <option value="14:00">2:00 PM</option>
+                                    <option value="15:00">3:00 PM</option>
+                                    <option value="16:00">4:00 PM</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Purpose of Meeting *</label>
+                                <textarea id="appointmentPurpose" name="purpose" class="form-control" rows="3" required></textarea>
+                            </div>
+                            <button type="submit" class="btn submit-btn">Request Appointment</button>
+                            <div id="appointmentStatus" style="margin-top: 12px; font-size: 13px; text-align: center;"></div>
+                        </form>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Associated Lawyers -->
+            <section class="section" id="associated">
+                <h2 class="section-title">Associated Chambers</h2>
+                <div class="section-divider"></div>
+                <div class="associated-list">
+                    <div class="associated-item">
+                        <span class="associated-name">Adv. Rajesh Kumar Singh</span>
+                        <span class="associated-specialty">Civil & Constitutional Law</span>
+                    </div>
+                    <div class="associated-item">
+                        <span class="associated-name">Adv. Priya Sharma (AoR)</span>
+                        <span class="associated-specialty">Corporate & Commercial Law</span>
+                    </div>
+                    <div class="associated-item">
+                        <span class="associated-name">Adv. Vikram Mehta</span>
+                        <span class="associated-specialty">Criminal & Appellate Law</span>
+                    </div>
+                    <div class="associated-item">
+                        <span class="associated-name">Adv. Anjali Deshpande</span>
+                        <span class="associated-specialty">Intellectual Property Law</span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Footer -->
+            <footer class="footer">
+                <div class="footer-logo">SKM Chambers</div>
+                <div class="footer-address">
+                    <p>Chamber 236, MC Setalvad Lawyers Chambers</p>
+                    <p>Supreme Court of India, Tilak Marg</p>
+                    <p>New Delhi 110001</p>
+                    <p>+91-99991-82706</p>
+                    <p>Email: info@skmchambers.com</p>
+                </div>
+                <div class="footer-divider"></div>
+                <div class="footer-legal">
+                    <p>&copy; 2023 SKM Chambers. All rights reserved.</p>
+                    <a href="#" class="disclaimer-link" id="viewDisclaimerFooter">Legal Disclaimer</a>
+                </div>
+            </footer>
+        </main>
+    </div>
+
+    <!-- SCRIPT -->
+    <script>
+        // Consolidated client-side JS
+        document.addEventListener('DOMContentLoaded', () => {
+            // Elements
+            const disclaimerOverlay = document.getElementById('disclaimer-overlay');
+            const websiteContent = document.getElementById('websiteContent');
+            const agreeButton = document.getElementById('agreeButton');
+            const disagreeButton = document.getElementById('disagreeButton');
+            const showDisclaimerLinks = document.querySelectorAll('#showDisclaimer, #viewDisclaimerFooter');
+            
+            // Set min date for appointment form
+            const today = new Date().toISOString().split('T')[0];
+            const dateInput = document.getElementById('appointmentDate');
+            if (dateInput) {
+                dateInput.min = today;
+            }
+
+            // Disclaimer - show overlay only if not previously accepted
+            const hasAcceptedDisclaimer = localStorage.getItem('bciDisclaimerAccepted');
+            if (!hasAcceptedDisclaimer) {
+                if (disclaimerOverlay) disclaimerOverlay.style.display = 'flex';
+                if (websiteContent) websiteContent.style.display = 'none';
+            } else {
+                if (disclaimerOverlay) disclaimerOverlay.style.display = 'none';
+                if (websiteContent) websiteContent.style.display = 'block';
+            }
+
+            // Button handlers
+            if (agreeButton) {
+                agreeButton.addEventListener('click', () => {
+                    localStorage.setItem('bciDisclaimerAccepted', 'true');
+                    if (disclaimerOverlay) disclaimerOverlay.style.display = 'none';
+                    if (websiteContent) websiteContent.style.display = 'block';
+                });
+            }
+
+            if (disagreeButton) {
+                disagreeButton.addEventListener('click', () => {
+                    window.location.href = 'https://www.google.com';
+                });
+            }
+
+            if (showDisclaimerLinks && showDisclaimerLinks.length) {
+                showDisclaimerLinks.forEach(link => {
+                    link.addEventListener('click', e => {
+                        e.preventDefault();
+                        if (disclaimerOverlay) disclaimerOverlay.style.display = 'flex';
+                        if (websiteContent) websiteContent.style.display = 'none';
+                    });
+                });
+            }
+
+            // Smooth scroll for internal anchors
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function(e) {
+                    const href = this.getAttribute('href');
+                    if (!href) return;
+                    if (href === '#' || href === '#home') {
+                        e.preventDefault();
+                        window.scrollTo({ top: 0, behavior: 'smooth' });
+                        return;
+                    }
+                    if (href.startsWith('#')) {
+                        e.preventDefault();
+                        const targetElement = document.querySelector(href);
+                        if (targetElement) {
+                            window.scrollTo({ top: targetElement.offsetTop - 100, behavior: 'smooth' });
+                        }
+                    }
+                });
+            });
+
+            // Enquiry form - submit to backend
+            const enquiryFormEl = document.getElementById('enquiryForm');
+            if (enquiryFormEl) {
+                enquiryFormEl.addEventListener('submit', async function(e) {
+                    e.preventDefault();
+                    
+                    const statusEl = document.getElementById('enquiryStatus');
+                    const submitBtn = this.querySelector('.submit-btn');
+                    const originalText = submitBtn ? submitBtn.textContent : '';
+                    
+                    if (submitBtn) { 
+                        submitBtn.textContent = 'Submitting...'; 
+                        submitBtn.disabled = true; 
+                    }
+                    if (statusEl) {
+                        statusEl.textContent = '';
+                        statusEl.style.color = '';
+                    }
+
+                    const formData = {
+                        name: document.getElementById('enquiryName')?.value || '',
+                        email: document.getElementById('enquiryEmail')?.value || '',
+                        phone: document.getElementById('enquiryPhone')?.value || '',
+                        subject: document.getElementById('enquirySubject')?.value || '',
+                        message: document.getElementById('enquiryMessage')?.value || '',
+                        type: 'general_enquiry',
+                        timestamp: new Date().toISOString()
+                    };
+
+                    try {
+                        const response = await fetch('http://localhost:5000/api/enquiry', {
+                            method: 'POST',
+                            headers: { 
+                                'Content-Type': 'application/json', 
+                                'Accept': 'application/json' 
+                            },
+                            body: JSON.stringify(formData)
+                        });
+                        
+                        if (response.ok) {
+                            const result = await response.json();
+                            if (statusEl) {
+                                statusEl.textContent = '✅ Thank you for your enquiry. We will respond within two business days.';
+                                statusEl.style.color = 'green';
+                            }
+                            this.reset();
+                        } else {
+                            const errorText = await response.text();
+                            let errorMessage = 'Failed to submit enquiry.';
+                            try {
+                                const errorJson = JSON.parse(errorText);
+                                errorMessage = errorJson.error || errorMessage;
+                            } catch (e) {
+                                errorMessage = errorText || errorMessage;
+                            }
+                            
+                            if (statusEl) {
+                                statusEl.textContent = '❌ ' + errorMessage;
+                                statusEl.style.color = 'red';
+                            }
+                        }
+                    } catch (error) {
+                        console.error('Error submitting enquiry', error);
+                        if (statusEl) {
+                            statusEl.textContent = '⚠️ Network error. Please ensure the backend server is running at http://localhost:5000';
+                            statusEl.style.color = 'orange';
+                        }
+                    } finally {
+                        if (submitBtn) { 
+                            submitBtn.textContent = originalText; 
+                            submitBtn.disabled = false; 
+                        }
+                    }
+                });
+            }
+
+            // Appointment form - submit to backend
+            const appointmentFormEl = document.getElementById('appointmentForm');
+            if (appointmentFormEl) {
+                appointmentFormEl.addEventListener('submit', async function(e) {
+                    e.preventDefault();
+
+                    const statusEl = document.getElementById('appointmentStatus');
+                    const submitBtn = this.querySelector('.submit-btn');
+                    const originalText = submitBtn ? submitBtn.textContent : '';
+                    
+                    if (submitBtn) { 
+                        submitBtn.textContent = 'Submitting...'; 
+                        submitBtn.disabled = true; 
+                    }
+                    if (statusEl) {
+                        statusEl.textContent = '';
+                        statusEl.style.color = '';
+                    }
+
+                    const formData = {
+                        name: document.getElementById('appointmentName')?.value || '',
+                        email: document.getElementById('appointmentEmail')?.value || '',
+                        phone: document.getElementById('appointmentPhone')?.value || '',
+                        preferredDate: document.getElementById('appointmentDate')?.value || '',
+                        preferredTime: document.getElementById('appointmentTime')?.value || '',
+                        purpose: document.getElementById('appointmentPurpose')?.value || '',
+                        type: 'appointment_request',
+                        timestamp: new Date().toISOString()
+                    };
+
+                    try {
+                        const response = await fetch('http://localhost:5000/api/appointment', {
+                            method: 'POST',
+                            headers: { 
+                                'Content-Type': 'application/json', 
+                                'Accept': 'application/json' 
+                            },
+                            body: JSON.stringify(formData)
+                        });
+                        
+                        if (response.ok) {
+                            const result = await response.json();
+                            if (statusEl) {
+                                statusEl.textContent = '✅ Your appointment request has been submitted. We will contact you to confirm.';
+                                statusEl.style.color = 'green';
+                            }
+                            this.reset();
+                            // Reset min date
+                            const dateInput = document.getElementById('appointmentDate');
+                            if (dateInput) {
+                                dateInput.min = new Date().toISOString().split('T')[0];
+                            }
+                        } else {
+                            const errorText = await response.text();
+                            let errorMessage = 'Failed to submit appointment request.';
+                            try {
+                                const errorJson = JSON.parse(errorText);
+                                errorMessage = errorJson.error || errorMessage;
+                            } catch (e) {
+                                errorMessage = errorText || errorMessage;
+                            }
+                            
+                            if (statusEl) {
+                                statusEl.textContent = '❌ ' + errorMessage;
+                                statusEl.style.color = 'red';
+                            }
+                        }
+                    } catch (error) {
+                        console.error('Error submitting appointment', error);
+                        if (statusEl) {
+                            statusEl.textContent = '⚠️ Network error. Please ensure the backend server is running at http://localhost:5000';
+                            statusEl.style.color = 'orange';
+                        }
+                    } finally {
+                        if (submitBtn) { 
+                            submitBtn.textContent = originalText; 
+                            submitBtn.disabled = false; 
+                        }
+                    }
+                });
+            }
+            
+            // Test backend connection on load
+            async function testBackendConnection() {
+                try {
+                    const response = await fetch('http://localhost:5000/health');
+                    if (response.ok) {
+                        console.log('✅ Backend connection successful');
+                    } else {
+                        console.warn('⚠️ Backend returned non-OK status');
+                    }
+                } catch (error) {
+                    console.warn('⚠️ Backend not reachable at http://localhost:5000');
+                    console.warn('Make sure to run: npm run dev in the backend directory');
+                }
+            }
+            
+            // Test connection after a delay
+            setTimeout(testBackendConnection, 1000);
+        });
+    </script>
+</body>
+</html>
